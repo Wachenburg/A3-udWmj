@@ -1,0 +1,23 @@
+{
+  "name": "a3-udwmj",
+  "version": "1.0.0",
+  "description": "Trabalho de faculdade",
+  "homepage": "https://github.com/Wachenburg/A3-udWmj#readme",
+  "bugs": {
+    "url": "https://github.com/Wachenburg/A3-udWmj/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wachenburg/A3-udWmj.git"
+  },
+  "license": "ISC",
+  "author": "Wachenburg",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^1.9.0"
+  }
+}
