@@ -14,11 +14,11 @@
 
                     //console.log(cepTest)
                     cepCleaned = cepTest.replace(/[^\d]+/g, '')
-                    console.log("2")
+                    //console.log("2")
                     if (cepCleaned.length == 8) {
 
                         url = `https://viacep.com.br/ws/${cepCleaned}/json/`
-                        console.log("3")
+                        //console.log("3")
                         try {
                             //console.log("4")
                             let response = await fetch(url)
@@ -31,8 +31,9 @@
                             const json = await response.json();
                             console.log(json);
                             //console.log("6")
-                            console.log(json.logradouro)
-                            console.log(document.getElementById('logradouro').value)
+                            //console.log(json.logradouro)
+                            //console.log(document.getElementById('logradouro').value)
+                            if(!json.erro){
                             try {
                                 document.getElementById('logradouro').value = json.logradouro
                                 document.getElementById('bairro').value = json.bairro
@@ -42,6 +43,13 @@
                             } catch (test) {
                                 console.log(test)
                             }
+                        }else{
+                            document.getElementById('logradouro').value = ''
+                                document.getElementById('bairro').value = ''
+                                document.getElementById('localidade').value = ''
+                                document.getElementById('uf').value = ''
+                                document.getElementById('erro').value = "CEP inválido"
+                        }
                             //console.log("7")
                         } catch (e) {
                             //console.log(e)
@@ -70,12 +78,18 @@
     <label for="cep">CEP:</label>
     <input type="text" id="cepSend" name="cepSend">
 
-    <input type="button" id="functionCall" onclick="cepValidation()">Enviar</button>
+    <input type="button" id="functionCall" value="Enviar" onclick="cepValidation()"></button>
 
-    </br><input type="text" id="logradouro" name="logradouro" disabled></br>
+    </br>
+    <label for="logradouro">logradouro:</label>
+    <input type="text" id="logradouro" name="logradouro" disabled></br>
+    <label for="bairro">bairro:</label>
     <input type="text" id="bairro" name="bairro" disabled></br>
+    <label for="localidade">localidade:</label>
     <input type="text" id="localidade" name="localidade" disabled></br>
+    <label for="uf">uf:</label>
     <input type="text" id="uf" name="uf" disabled></br>
+    <label for="erro">erro:</label>
     <input type="text" id="erro" name="erro" disabled></br>
 
 </body>
