@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function cepValidation() {
+            let cepTest = document.getElementById('cepSend').value
+            //console.log("1")
+                ; (async () => {
+
+
+                    //console.log(cepTest)
+                    cepCleaned = cepTest.replace(/[^\d]+/g, '')
+                    console.log("2")
+                    if (cepCleaned.length == 8) {
+
+                        url = `https://viacep.com.br/ws/${cepCleaned}/json/`
+                        console.log("3")
+                        try {
+                            //console.log("4")
+                            let response = await fetch(url)
+                            console.log(response.body)
+                            //console.log("5")
+                            if (!response.ok) {
+                                throw new Error(`Response status: ${response.status}`);
+                            }
+
+                            const json = await response.json();
+                            console.log(json);
+                            //console.log("6")
+                            console.log(json.logradouro)
+                            console.log(document.getElementById('logradouro').value)
+                            try {
+                                document.getElementById('logradouro').value = json.logradouro
+                                document.getElementById('bairro').value = json.bairro
+                                document.getElementById('localidade').value = json.localidade
+                                document.getElementById('uf').value = json.uf
+                                document.getElementById('erro').value = ""
+                            } catch (test) {
+                                console.log(test)
+                            }
+                            //console.log("7")
+                        } catch (e) {
+                            //console.log(e)
+                            if (e.status === 400) {
+                                document.getElementById('logradouro').value = ''
+                                document.getElementById('bairro').value = ''
+                                document.getElementById('localidade').value = ''
+                                document.getElementById('uf').value = ''
+                                document.getElementById('erro').value = "Erro de envio"
+                            }
+                        }
+                    } else {
+                        document.getElementById('logradouro').value = ''
+                        document.getElementById('bairro').value = ''
+                        document.getElementById('localidade').value = ''
+                        document.getElementById('uf').value = ''
+                        document.getElementById('erro').value = "CEP inválido"
+                    }
+                })();
+        }
+    </script>
+</head>
+
+<body>
+
+    <label for="cep">CEP:</label>
+    <input type="text" id="cepSend" name="cepSend">
+
+    <input type="button" id="functionCall" onclick="cepValidation()">Enviar</button>
+
+    </br><input type="text" id="logradouro" name="logradouro" disabled></br>
+    <input type="text" id="bairro" name="bairro" disabled></br>
+    <input type="text" id="localidade" name="localidade" disabled></br>
+    <input type="text" id="uf" name="uf" disabled></br>
+    <input type="text" id="erro" name="erro" disabled></br>
+
+</body>
+
+</html>
